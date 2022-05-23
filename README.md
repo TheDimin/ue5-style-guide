@@ -4,21 +4,21 @@
 * If a rule doesn't work for us, we can change it.
 * This guide is a revision of https://github.com/Allar/ue5-style-guide
  ** If you wonder why a rule is the way it is, check that document.
-
+ 
+<a name="0.2"></a>
 ### The project should look like a single person created it.
-### If you see someone working either against a style guide or no style guide, try to correct them.
-* It is far easier to help and to ask for help when people are consistent.
 
-<a name="00"></a>
-## 00. Globally Enforced Opinions
+<a name="0.3"></a>
+### If you see someone working either against the style guide, try to correct them.
+* It is easier to help and ask for help when people are consistent.
 
-<a name="00.1"></a>
-### 00.1 Forbidden Characters
+<a name="0.4"></a>
+### Department specific items are marked accordingly
+* `DP` `VA` `PR`
 
-<a name="identifiers-1"></a>
-#### Identifiers
-Any `Identifier`(Names) should strive to only have the following characters when possible
-
+<a name="0.5"></a>
+<a name="identifiers"></a>
+### Any `Identifier` should strive to only have the following characters when possible
 * ABCDEFGHIJKLMNOPQRSTUVWXYZ
 * abcdefghijklmnopqrstuvwxyz
 * 1234567890
@@ -27,22 +27,13 @@ Any `Identifier`(Names) should strive to only have the following characters when
 <a name="1"></a>
 
 ## Table of contents
-- [Important Terminology](#important-terminology)
-  - [Levels/Maps](#terms-level-map)
   - [Identifiers](#terms-identifiers)
-  - [Cases](#terms-cases)
-  - [Variables / Properties](#terms-var-prop)
-    - [Property](#terms-property)
-    - [Variable](#terms-variable)
 - [0. Principles](#0)
-  - [0.1 If your UE4 project already has a style guide, you should follow it](#0.1)
-  - [0.2 All structure, assets, and code in any Unreal Engine 4 project should look like a single person created it, no matter how many people contributed](#0.2)
-  - [0.3 Friends do not let friends have bad style](#0.3)
-  - [0.4 A team without a style guide is no team of mine](#0.4)
-  - [0.5 Don't Break The Law](#0.5)
-- [00. Globally Enforced Opinions](#00)
-  - [00.1 Forbidden Characters](#00.1)
-    - [Identifiers](#identifiers)
+  - [0.1 Follow the style guide](#0.1)
+  - [0.2 Project looks as if its created by a single person](#0.2)
+  - [0.3 Everyone should follow the style guide](#0.3)
+  - [0.4 Department markers](#0.4)
+  - [0.5 Whitelisted indentifiers](#0.5)
 - [1. Asset Naming Conventions](#anc)
   - [1.1 Base Asset Name - `Prefix_BaseAssetName_Variant_Suffix`](#base-asset-name)
     - [1.1 Examples](#1.1-examples)
@@ -81,7 +72,7 @@ Any `Identifier`(Names) should strive to only have the following characters when
   - [2.7 Very Large Asset Sets Get Their Own Folder Layout](#structure-large-sets)
   - [2.8 `MaterialLibrary`](#structure-material-library)
   - [2.9 No Empty Folders](#structure-no-empty-folders)
-- [3. Blueprints](#bp)
+- [3. Blueprints] `PR` `DP`(#bp)
   - [3.1 Compiling](#bp-compiling)
   - [3.2 Variables](#bp-vars)
     - [3.2.1 Naming](#bp-var-naming)
@@ -124,7 +115,7 @@ Any `Identifier`(Names) should strive to only have the following characters when
     - [3.4.4 Graphs Should Be Reasonably Commented](#bp-graphs-block-comments)
     - [3.4.5 Graphs Should Handle Casting Errors Where Appropriate](#bp-graphs-cast-error-handling)
     - [3.4.6 Graphs Should Not Have Any Dangling / Loose / Dead Nodes](#bp-graphs-dangling-nodes)
-- [4. Static Meshes](#4)
+- [4. Static Meshes] `VA` (#4)
   - [4.1 Static Mesh UVs](#s-uvs)
     - [4.1.1 All Meshes Must Have UVs](#s-uvs-no-missing)
     - [4.1.2 All Meshes Must Not Have Overlapping UVs for Lightmaps](#s-uvs-no-overlapping)
@@ -141,12 +132,13 @@ Any `Identifier`(Names) should strive to only have the following characters when
   - [6.4 Marketplace Specific Rules](#levels-mp-rules)
     - [6.4.1 Overview Level](#levels-mp-rules-overview)
     - [6.4.2 Demo Level](#levels-mp-rules-demo)
-- [7. Textures](#textures)
+- [7. Textures] `VA` (#textures)
   - [7.1 Dimensions Are Powers of 2](#textures-dimensions)
   - [7.2 Texture Density Should Be Uniform](#textures-density)
   - [7.3 Textures Should Be No Bigger than 8192](#textures-max-size)
   - [7.4 Textures Should Be Grouped Correctly](#textures-group)
 
+<a name="1.0"></a>
 ## 1. Asset Naming Conventions
 Naming conventions should be treated as law.
 
