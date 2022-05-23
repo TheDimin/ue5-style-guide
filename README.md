@@ -2,7 +2,7 @@
 <a name="0.1"></a>
 ### We have a style guide, try to abide by  it.
 * If a rule doesn't work for us, we can change it.
-* This guide is a revision of https://github.com/TheDimin/ue5-style-guide
+* This guide is a revision of https://github.com/Allar/ue5-style-guide
  ** If you wonder why a rule is the way it is, check that document.
 
 ### The project should look like a single person created it.
@@ -508,7 +508,8 @@ Remember: Blueprinting badly bears blunders, beware! (Phrase by [KorkuVeren](htt
 <a name="bp-compiling"></a>
 ### 3.1 Compiling
 * Blueprints should compile with zero warning and zero errors.
- ** Fix them immediately
+** Fix them asap
+** Fix them before asking for help (Unless you don't know how to solve the warnings/errors)
   
 ## DO NOT STORE BROKEN BLUEPRINTS IN SOURCE CONTROL
   * Shelve them instead.
@@ -525,14 +526,11 @@ The words `variable` and `property` may be used interchangeably.
 
 <a name="3.2.1.1"></a>
 <a name="bp-var-naming-nouns"></a>
-##### 3.2.1.1 Nouns
-All variable names must be clear, unambiguous, and descriptive nouns.
-All variables must use PascalCasing
+##### 3.2.1.1 All variable names must be clear, unambiguous, descriptive nouns, and use PascalCasing
 
 <a name="3.2.1.5"></a>
 <a name="bp-vars-naming-context"></a>
-##### 3.2.1.5 Considered Context
-All variable names must not be redundant with their context as all variable references in Blueprint will always have context.
+##### 3.2.1.5 All variable names must not be redundant with their context
 * Examples for variables inside `BP_PlayerCharacter` **BAD** `PlayerScore`,`PlayerKills` **GOOD* `Score`,`Kills`
 
 <a name="3.2.1.8"></a>
@@ -586,26 +584,16 @@ If a class has a moderate amount of variables (5+), all `Editable` variables sho
 <a name="3.3"></a>
 <a name="bp-functions"></a>
 ### 3.3 Functions, Events, and Event Dispatchers
-This section describes how you should author functions, events, and event dispatchers. Everything that applies to functions also applies to events, unless otherwise noted.
 
 <a name="3.3.1"></a>
 <a name="bp-funcs-naming"></a>
 #### 3.3.1 Function Naming
-The naming of functions, events, and event dispatchers is critically important. Based on the name alone, certain assumptions can be made about functions. For example:
-
-* Is it a pure function?
-* Is it fetching state information?
-* Is it a handler?
-* What is its purpose?
-
-These questions and more can all be answered when functions are named appropriately.
 
 <a name="3.3.1.1"></a>
 <a name="bp-funcs-naming-verbs"></a>
-#### 3.3.1.1 All Functions Should Be Verbs
-* All functions should all start with verbs. 
+#### 3.3.1.1 All Functions start with Verbs
 * They should be worded in the present tense whenever possible. 
-* They should also have  context as to what they are doing.
+* They should have context as to what they are doing.
   
 Good examples:
 * `Fire` - Good example if in a Character / Weapon class, as it has context. Bad if in a Barrel / Grass / any ambiguous class.
@@ -614,115 +602,41 @@ Good examples:
 * `IsEnemy` - ["Is" is a verb.](http://writingexplained.org/is-is-a-verb)
 
 Bad examples:
-
 * `Dead` - Is Dead? Will deaden?
-* `Rock`
 * `ProcessData` - Ambiguous, these words mean nothing.
-* `PlayerState` - Nouns are ambiguous.
-* `Color` - Verb with no context, or ambiguous noun.
 
 <a name="3.3.1.2"></a>
 <a name="bp-funcs-naming-onrep"></a>
-#### 3.3.1.2 Property RepNotify Functions Always `OnRep_Variable`
-
-All functions for replicated with notification variables should have the form `OnRep_Variable`. This is forced by the Blueprint editor. If you are writing a C++ `OnRep` function however, it should also follow this convention when exposing it to Blueprints.
+#### 3.3.1.2 Property RepNotify Functions Always use `OnRep_VariableName`
 
 <a name="3.3.1.3"></a>
 <a name="bp-funcs-naming-bool"></a>
 #### 3.3.1.3 Info Functions Returning Bool Should Ask Questions
+  * Should be marked const as they don't modify the blueprint
+  
+Good examples: `IsDead` `IsOnFire` `IsAlive` `CanReload`
 
-When writing a function that does not change the state of or modify any object and is purely for getting information, state, or computing a yes/no value, it should ask a question. This should also follow [the verb rule](#bp-funcs-naming-verbs).
-
-This is extremely important as if a question is not asked, it may be assumed that the function performs an action and is returning whether that action succeeded.
-
-Good examples:
-
-* `IsDead`
-* `IsOnFire`
-* `IsAlive`
-* `IsSpeaking`
-* `IsHavingAnExistentialCrisis`
-* `IsVisible`
-* `HasWeapon` - ["Has" is a verb.](http://grammar.yourdictionary.com/parts-of-speech/verbs/Helping-Verbs.html)
-* `WasCharging` - ["Was" is past-tense of "be".](http://grammar.yourdictionary.com/parts-of-speech/verbs/Helping-Verbs.html) Use "was" when referring to 'previous frame' or 'previous state'.
-* `CanReload` - ["Can" is a verb.](http://grammar.yourdictionary.com/parts-of-speech/verbs/Helping-Verbs.html)
-
-Bad examples:
-
-* `Fire` - Is on fire? Will fire? Do fire?
+Bad examples: `Fire`,`Dead`
 * `OnFire` - Can be confused with event dispatcher for firing.
-* `Dead` - Is dead? Will deaden?
-* `Visibility` - Is visible? Set visibility? A description of flying conditions?
 
 <a name="3.3.1.4"></a>
 <a name="bp-funcs-naming-eventhandlers"></a>
 #### 3.3.1.4 Event Handlers and Dispatchers Should Start With `On`
+* `Handle` is not allowed. It is 'Unreal' to use `On` instead of `Handle`, while other frameworks may prefer to use `Handle` instead of `On`.
 
-Any function that handles an event or dispatches an event should start with `On` and continue to follow [the verb rule](#bp-funcs-naming-verbs). The verb may move to the end however if past-tense reads better.
-
-[Collocations](http://dictionary.cambridge.org/us/grammar/british-grammar/about-words-clauses-and-sentences/collocation) of the word `On` are exempt from following the verb rule.
-
-`Handle` is not allowed. It is 'Unreal' to use `On` instead of `Handle`, while other frameworks may prefer to use `Handle` instead of `On`.
-
-Good examples:
-
-* `OnDeath` - Common collocation in games
-* `OnPickup`
-* `OnReceiveMessage`
-* `OnMessageRecieved`
-* `OnTargetChanged`
-* `OnClick`
-* `OnLeave`
-
-Bad examples:
-
-* `OnData`
-* `OnTarget`
-* `HandleMessage`
-* `HandleDeath`
-
-<a name="3.3.1.5"></a>
-<a name="bp-funcs-naming-rpcs"></a>
-#### 3.3.1.5 Remote Procedure Calls Should Be Prefixed With Target
-
-Any time an RPC is created, it should be prefixed with either `Server`, `Client`, or `Multicast`. No exceptions.
-
-After the prefix, follow all other rules regarding function naming.
-
-Good examples:
-
-* `ServerFireWeapon`
-* `ClientNotifyDeath`
-* `MulticastSpawnTracerEffect`
-
-Bad examples:
-
-* `FireWeapon` - Does not indicate its an RPC of some kind.
-* `ServerClientBroadcast` - Confusing.
-* `AllNotifyDeath` - Use `Multicast`, never `All`.
-* `ClientWeapon` - No verb, ambiguous.
+Good examples: `OnDeath` `OnPickup` `OnTargetChanged`
+Bad examples: `HandleDeath` `OnData` `OnTarget`
 
 
 <a name="3.3.2"></a>
 <a name="bp-funcs-return"></a>
 #### 3.3.2 All Functions Must Have Return Nodes
 
-All functions must have return nodes, no exceptions.
-
-Return nodes explicitly note that a function has finished its execution. In a world where blueprints can be filled with `Sequence`, `ForLoopWithBreak`, and backwards reroute nodes, explicit execution flow is important for readability, maintenance, and easier debugging.
-
-The Blueprint compiler is able to follow the flow of execution and will warn you if there is a branch of your code with an unhandled return or bad flow if you use return nodes.
-
-In situations like where a programmer may add a pin to a Sequence node or add logic after a for loop completes but the loop iteration might return early, this can often result in an accidental error in code flow. The warnings the Blueprint compiler will alert everyone of these issues immediately.
-
 <a name="3.3.3"></a>
 <a name="bp-graphs-funcs-node-limit"></a>
 #### 3.3.3 No Function Should Have More Than 50 Nodes
-
-Simply, no function should have more than 50 nodes. Any function this big should be broken down into smaller functions for readability and ease of maintenance.
-
+  
 The following nodes are not counted as they are deemed to not increase function complexity:
-
 * Comment
 * Route
 * Cast
@@ -731,39 +645,23 @@ The following nodes are not counted as they are deemed to not increase function 
 * Function Entry
 * Self
 
-<a name="3.3.4"></a>
-<a name="bp-graphs-funcs-description"></a>
-#### 3.3.4 All Public Functions Should Have A Description
-
-This rule applies more to public facing or marketplace blueprints, so that others can more easily navigate and consume your blueprint API.
-
-Simply, any function that has an access specificer of Public should have its description filled out.
-
 <a name="3.3.5"></a>
 <a name="bp-graphs-funcs-plugin-category"></a>
-#### 3.3.5 All Custom Static Plugin `BlueprintCallable` Functions Must Be Categorized By Plugin Name
-
-If your project includes a plugin that defines `static` `BlueprintCallable` functions, they should have their category set to the plugin's name or a subset category of the plugin's name.
-
-For example, `Zed Camera Interface` or `Zed Camera Interface | Image Capturing`.
+#### 3.3.5 All blueprint libary Functions Must Be Categorized By Project Name
 
 <a name="3.4"></a>
 <a name="bp-graphs"></a>
 ### 3.4 Blueprint Graphs
 
-This section covers things that apply to all Blueprint graphs.
-
 <a name="3.4.1"></a>
 <a name="bp-graphs-spaghetti"></a>
 #### 3.4.1 No Spaghetti
-
-Wires should have clear beginnings and ends. You should never have to mentally untangle wires to make sense of a graph. Many of the following sections are dedicated to reducing spaghetti.
+* Clear beginning and ends
 
 <a name="3.4.2"></a>
 <a name="bp-graphs-align-wires"></a>
 #### 3.4.2 Align Wires Not Nodes
-
-Always align wires, not nodes. You can't always control the size and pin location on a node, but you can always control the location of a node and thus control the wires. Straight wires provide clear linear flow. Wiggly wires wear wits wickedly. You can straighten wires by using the Straighten Connections command with BP nodes selected. Hotkey: Q
+* Use Q to allign nodes.
 
 Good example: The tops of the nodes are staggered to keep a perfectly straight white exec line.
 ![Aligned By Wires](https://github.com/Allar/ue5-style-guide/blob/main/images/bp-graphs-align-wires-good.png?raw=true "Aligned By Wires")
@@ -778,28 +676,18 @@ Acceptable Example: Certain nodes might not cooperate no matter how you use the 
 <a name="bp-graphs-exec-first-class"></a>
 #### 3.4.3 White Exec Lines Are Top Priority
 
-If you ever have to decide between straightening a linear white exec line or straightening data lines of some kind, always straighten the white exec line.
-
 <a name="3.4.4"></a>
 <a name="bp-graphs-block-comments"></a>
 #### 3.4.4 Graphs Should Be Reasonably Commented
-
-Blocks of nodes should be wrapped in comments that describe their higher-level behavior. While every function should be well named so that each individual node is easily readable and understandable, groups of nodes contributing to a purpose should have their purpose described in a comment block. If a function does not have many blocks of nodes and its clear that the nodes are serving a direct purpose in the function's goal, then they do not need to be commented as the function name and  description should suffice.
 
 <a name="3.4.5"></a>
 <a name="bp-graphs-cast-error-handling"></a>
 #### 3.4.5 Graphs Should Handle Casting Errors Where Appropriate
 
-If a function or event assumes that a cast always succeeds, it should appropriately report a failure in logic if the cast fails. This lets others know why something that is 'supposed to work' doesn't. A function should also attempt a graceful recover after a failed cast if it's known that the reference being casted could ever fail to be casted.
-
-This does not mean every cast node should have its failure handled. In many cases, especially events regarding things like collisions, it is expected that execution flow terminates on a failed cast quietly.
-
 <a name="3.4.6"></a>
 <a name="bp-graphs-dangling-nodes"></a>
-#### 3.4.6 Graphs Should Not Have Any Dangling / Loose / Dead Nodes
-
-All nodes in all blueprint graphs must have a purpose. You should not leave dangling blueprint nodes around that have no purpose or are not executed.
-
+#### 3.4.6 Graphs Should Not Have Any unused nodes
+  
 **[⬆ Back to Top](#table-of-contents)**
 
 
@@ -814,45 +702,31 @@ This section will focus on Static Mesh assets and their internals.
 <a name="s-uvs"></a>
 ### 4.1 Static Mesh UVs
 
-If Linter is reporting bad UVs and you can't seem to track it down, open the resulting `.log` file in your project's `Saved/Logs` folder for exact details as to why it's failing. I am hoping to include these messages in the Lint report in the future.
-
 <a name="4.1.1"></a>
 <a name="s-uvs-no-missing"></a>
 #### 4.1.1 All Meshes Must Have UVs
 
-Pretty simple. All meshes, regardless how they are to be used, should not be missing UVs.
-
 <a name="4.1.2"></a>
 <a name="s-uvs-no-overlapping"></a>
-#### 4.1.2 All Meshes Must Not Have Overlapping UVs for Lightmaps
-
-Pretty simple. All meshes, regardless how they are to be used, should have valid non-overlapping UVs.
-
+#### 4.1.2 All Meshes Must Not Have Overlapping UVs for Lightmaps (Still a thing in ue5?)
+  
 <a name="4.2"></a>
 <a name="s-lods"></a>
 ### 4.2 LODs Should Be Set Up Correctly
 
-This is a subjective check on a per-project basis, but as a general rule any mesh that can be seen at varying distances should have proper LODs.
-
 <a name="4.3"></a>
 <a name="s-modular-snapping"></a>
 ### 4.3 Modular Socketless Assets Should Snap To The Grid Cleanly
-
-This is a subjective check on a per-asset basis, however any modular socketless assets should snap together cleanly based on the project's grid settings.
-
-It is up to the project whether to snap based on a power of 2 grid or on a base 10 grid. However if you are authoring modular socketless assets for the marketplace, Epic's requirement is that they snap cleanly when the grid is set to 10 units or bigger.
-
+  
 <a name="4.4"></a>
 <a name="s-collision"></a>
 ### 4.4 All Meshes Must Have Collision
-
-Regardless of whether an asset is going to be used for collision in a level, all meshes should have proper collision defined. This helps the engine with things such as bounds calculations, occlusion, and lighting. Collision should also be well-formed to the asset.
+* Regardless of whether an asset is going to be used for collision in a level
 
 <a name="4.5"></a>
 <a name="s-scaled"></a>
 ### 4.5 All Meshes Should Be Scaled Correctly
-
-This is a subjective check on a per-project basis, however all assets should be scaled correctly to their project. Level designers or blueprint authors should not have to tweak the scale of meshes to get them to confirm in the editor. Scaling meshes in the engine should be treated as a scale override, not a scale correction.
+* Scaling meshes in the engine should be treated as a scale override, not a scale correction.
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -867,11 +741,7 @@ This section will focus on Niagara assets and their internals.
 <a name="5.1"></a>
 <a name="ng-rules"></a>
 ### 5.1 No Spaces, Ever
-
-As mentioned in [00.1 Forbidden Identifiers](#00), spaces and all white space characters are forbidden in identifiers. This is especially true for Niagara systems as it makes working with things significantly harder if not impossible when working with HLSL or other means of scripting within Niagara and trying to reference an identifier.
-
-(Original Contribution by [@dunenkoff](https://github.com/Allar/ue5-style-guide/issues/58))
-
+As mentioned in [00.1 Forbidden Identifiers](#00)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -888,87 +758,41 @@ This section will focus on Level assets and their internals.
 <a name="6.1"></a>
 <a name="levels-no-errors-or-warnings"></a>
 ### 6.1 No Errors Or Warnings
-
-All levels should load with zero errors or warnings. If a level loads with any errors or warnings, they should be fixed immediately to prevent cascading issues.
-
-You can run a map check on an open level in the editor by using the console command "map check".
-
-Please note: Linter is even more strict on this than the editor is currently, and will catch load errors that the editor will resolve on its own.
+* They should be fixed immediately to prevent cascading issues.
+  
+> You can run a map check on an open level in the editor by using the console command "map check".
 
 <a name="6.2"></a>
 <a name="levels-lighting-should-be-built"></a>
-### 6.2 Lighting Should Be Built
-
-It is normal during development for levels to occasionally not have lighting built. When doing a test/internal/shipping build or any build that is to be distributed however, lighting should always be built.
+### 6.2 Lighting Should Be Built (Not relevant in ue5 ?)
 
 <a name="6.3"></a>
 <a name="levels-no-visible-z-fighting"></a>
 ### 6.3 No Player Visible Z Fighting
 
-Levels should not have any [z-fighting](https://en.wikipedia.org/wiki/Z-fighting) in all areas visible to the player.
-
-<a name="6.4"></a>
-<a name="levels-mp-rules"></a>
-### 6.4 Marketplace Specific Rules
-
-If a project is to be sold on the UE4 Marketplace, it must follow these rules.
-
-<a name="6.4.1"></a>
-<a name="levels-mp-rules-overview"></a>
-#### 6.4.1 Overview Level
-
-If your project contains assets that should be visualized or demoed, you must have a map within your project that contains the name "Overview".
-
-This overview map, if it is visualizing assets, should be set up according to [Epic's guidelines](http://help.epicgames.com/customer/en/portal/articles/2592186-marketplace-submission-guidelines-preparing-your-assets#Required%20Levels%20and%20Maps).
-
-For example, `InteractionComponent_Overview`.
-
-<a name="6.4.2"></a>
-<a name="levels-mp-rules-demo"></a>
-#### 6.4.2 Demo Level
-
-If your project contains assets that should be demoed or come with some sort of tutorial, you must have a map within your project that contains the name "Demo". This level should also contain documentation within it in some form that illustrates how to use your project. See Epic's Content Examples project for good examples on how to do this.
-
-If your project is a gameplay mechanic or other form of system as opposed to an art pack, this can be the same as your "Overview" map.
-
-For example, `InteractionComponent_Overview_Demo`, `ExplosionKit_Demo`.
-
-**[⬆ Back to Top](#table-of-contents)**
-
-
 <a name="7"></a>
 <a name="textures"></a>
 ## 7. Textures
-
-This section will focus on Texture assets and their internals.
-
+  
 <a name="7.1"></a>
 <a name="textures-dimensions"></a>
 ### 7.1 Dimensions Are Powers of 2
-
-All textures, except for UI textures, must have its dimensions in multiples of powers of 2. Textures do not have to be square.
+* Textures do not have to be square.
+* Exception for UI textures
 
 For example, `128x512`, `1024x1024`, `2048x1024`, `1024x2048`, `1x512`.
 
 <a name="7.2"></a>
 <a name="textures-density"></a>
 ### 7.2 Texture Density Should Be Uniform
-
-All textures should be of a size appropriate for their standard use case. Appropriate texture density varies from project to project, but all textures within that project should have a consistent density.
-
-For example, if a project's texture density is 8 pixel per 1 unit, a texture that is meant to be applied to a 100x100 unit cube should be 1024x1024, as that is the closest power of 2 that matches the project's texture density.
-
+  
 <a name="7.3"></a>
 <a name="textures-max-size"></a>
 ### 7.3 Textures Should Be No Bigger than 8192
 
-No texture should have a dimension that exceeds 8192 in size, unless you have a very explicit reason to do so. Often, using a texture this big is simply just a waste of resources.
-
 <a name="7.4"></a>
 <a name="textures-group"></a>
 ### 7.4 Textures Should Be Grouped Correctly
-
-Every texture has a Texture Group property used for LODing, and this should be set correctly based on its use. For example, all UI textures should belong in the UI texture group.
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -979,6 +803,7 @@ Every texture has a Texture Group property used for LODing, and this should be s
 * [CosmoMyzrailGorynych](https://github.com/CosmoMyzrailGorynych)
 * [billymcguffin](https://github.com/billymcguffin)
 * [akenatsu](https://github.com/akenatsu)
+* [Damian]
 
 ## License
 
