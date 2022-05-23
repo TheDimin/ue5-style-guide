@@ -169,9 +169,9 @@ Naming conventions should be treated as law.
 
 | Asset Type              | Asset Name                                                 |
 | ----------------------- | ---------------------------------------------------------- |
-| Static Mesh (01)        | S_Rock_01                                                  |
-| Static Mesh (02)        | S_Rock_02                                                  |
-| Static Mesh (03)        | S_Rock_03                                                  |
+| Static Mesh (01)        | SM_Rock_01                                                  |
+| Static Mesh (02)        | SM_Rock_02                                                  |
+| Static Mesh (03)        | SM_Rock_03                                                  |
 | Material                | M_Rock                                                     |
 | Material Instance (Snow)| MI_Rock_Snow                                               |
 
@@ -189,7 +189,7 @@ When naming an asset, use these tables to determine the prefix and suffix to use
 | Level / Map             |            |            | [Should be in a folder called Maps.](#2.4) |
 | Blueprint               | BP_        |            |                                  |
 | Material                | M_         |            |                                  |
-| Static Mesh             | S_         |            | Many use SM_. We use S_.         |
+| Static Mesh             | SM_        |            |                                  |
 | Skeletal Mesh           | SK_        |            |                                  |
 | Texture                 | T_         | _?         | See [Textures](#anc-textures)    |
 | Particle System         | PS_        |            |                                  |
@@ -716,7 +716,8 @@ This section will focus on Static Mesh assets and their internals.
 
 <a name="4.3"></a>
 <a name="s-modular-snapping"></a>
-### 4.3 Modular Socketless Assets Should Snap To The Grid Cleanly
+### 4.3 Modular Assets should have measurements
+  * 1, 2 or 4 meter a piece.
   
 <a name="4.4"></a>
 <a name="s-collision"></a>
@@ -774,13 +775,20 @@ This section will focus on Level assets and their internals.
 <a name="textures"></a>
 ## 7. Textures
   
-<a name="7.1"></a>
+<a name="7.1.1"></a>
 <a name="textures-dimensions"></a>
 ### 7.1 Dimensions Are Powers of 2
 * Textures do not have to be square.
 * Exception for UI textures
 
 For example, `128x512`, `1024x1024`, `2048x1024`, `1024x2048`, `1x512`.
+  
+<a name="7.1.2"></a>
+<a name="textures-dimensions"></a>
+### Texture conventions
+  * Hero: 2048 x 2048
+  * Secondary: 1024 x 1024
+  * Designer materials: 2048 x 2048
 
 <a name="7.2"></a>
 <a name="textures-density"></a>
