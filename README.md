@@ -1,3 +1,7 @@
+## Changes
+### Use L_ For levels.
+* 30 - 5
+
 ## Overview
 <a name="0.1"></a>
 ### We have a style guide, try to abide by  it.
@@ -92,7 +96,7 @@ When naming an asset, use these tables to determine the prefix and suffix to use
 
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| Level / Map             |            |            | [Should be in a folder called Maps.](#2.4) |
+| Level / Map             | L_         |            | [Should be in a folder called Maps.](#2.4) |
 | Blueprint               | BP_        |            |                                  |
 | Material                | M_         |            |                                  |
 | Static Mesh             | SM_        |            |                                  |
